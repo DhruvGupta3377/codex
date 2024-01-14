@@ -1,6 +1,7 @@
-body, html {
+body, html,div {
   height: 100%;
   margin: 0;
+  font: 1em hack;
 }
 
 #fullscreen-textarea {
@@ -9,5 +10,5 @@ body, html {
   font-size: 2em;
   padding: 10px;
   box-sizing: border-box;
-  font: 1.75em hack;
+  /* font: 1.75em hack; */
 }

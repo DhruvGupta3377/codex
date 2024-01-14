@@ -1,4 +1,5 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
+
 /*
 #heading#
 !red!
@@ -6,11 +7,13 @@
 $green$
 */
 
+static mut PARSED_TEXT : String = String::new();
 
 #[tauri::command]
 fn greet(data: &str) -> String {
     format!("got this from app {}", data)
 }
+
 
 #[tauri::command]
 fn parse(data: &str) -> String{
@@ -91,14 +94,25 @@ fn parse(data: &str) -> String{
     // formatted_text.push_str("</html></body>");
     // println!("{:?}", formatted_text);
     // std::fs::write("asd.html", formatted_text).expect("Failed to write HTML file");
+    unsafe{
+        PARSED_TEXT = formatted_text.clone();
+    }
     formatted_text
+}
 
+
+#[tauri::command]
+fn get_parsed_text()-> &'static str{
+    unsafe{
+        println!("{:?}", PARSED_TEXT);
+        &PARSED_TEXT
+    }
 }
 
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![greet,parse])
+        .invoke_handler(tauri::generate_handler![greet,parse,get_parsed_text])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

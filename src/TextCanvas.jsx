@@ -1,14 +1,15 @@
 import { useState, useRef } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
 import "./textcanvas.css";
+import Preview from "./Preview";
 
 const TextCanvas = () => {
-  
   const [data, setData] = useState();
+  const [formattedData, setFormattedData] = useState();
   const inputRef = useRef(null);
-  async function greet(){
-    console.log(await invoke("greet", {data : data}))
-    console.log(await invoke("parse", {data : data}))
+  async function parse() {
+    setFormattedData(await invoke("parse", { data: data }));
+    console.log(formattedData);
   }
   const textInputHandler = () => {
     const input = event.target.value;
@@ -16,13 +17,13 @@ const TextCanvas = () => {
     setData(input);
     const lastChar = input.slice(-1);
     if (lastChar === "(") {
-      setData(input + ")"); 
+      setData(input + ")");
     }
-    greet()
+    parse();
   };
 
   return (
-    <div>
+    <>
       <textarea
         ref={inputRef}
         value={data}
@@ -30,7 +31,7 @@ const TextCanvas = () => {
         id="fullscreen-textarea"
         placeholder="Type something...."
       ></textarea>
-    </div>
+    </>
   );
 };
 

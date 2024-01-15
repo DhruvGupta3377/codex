@@ -12,6 +12,7 @@ $green$
 
 static mut PARSED_TEXT: String = String::new();
 
+
 #[tauri::command]
 fn parse(data: &str) -> String {
     let text = data;
@@ -107,12 +108,21 @@ fn open_filemanager()  {
     })
 }
 
+#[tauri::command]
+fn new_file() {
+    FileDialogBuilder::new().add_filter("Text documents(*.txt)", &["txt"]).set_directory("D:\\LessHolyText").save_file(|file_path| {
+        println!("got some file path {:?}", file_path.clone().unwrap());
+        std::fs::write(file_path.clone().unwrap(), "").expect("failed to create a newfile");
+    })
+}
+
 fn main() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
             parse,
             get_parsed_text,
-            open_filemanager
+            open_filemanager,
+            new_file
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

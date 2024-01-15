@@ -1,7 +1,6 @@
 import { useState, useRef,useEffect } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
 import "./textcanvas.css";
-import { useHotkeys } from "react-hotkeys-hook";
 
 const TextCanvas = () => {
   const [data, setData] = useState();

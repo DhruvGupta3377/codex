@@ -5,14 +5,23 @@ import { invoke } from "@tauri-apps/api/tauri";
 
 function App() {
   const [inEditing, setInEditing] = useState(true);
+  const [filePath, setFilePath] = useState("D:\LessHolyText\temp");
+
   async function fileExpClickHandler() {
     await invoke("open_filemanager");
   }
+
+  async function newFileHandler(){
+    await invoke("new_file");
+  }
+
+
   useEffect(() => {
     const phandleKeyDown = (event) => {
       if (event.ctrlKey && event.key === "p") {
         event.preventDefault();
         setInEditing(false);
+        console.log("p triggered")
       }
     };
     window.addEventListener("keydown", phandleKeyDown);
@@ -34,11 +43,20 @@ function App() {
     };
     window.addEventListener("keydown", qhandleKeyDown);
 
+    const nhandleKeyDown = (event) => {
+      if (event.ctrlKey && event.key === "n") {
+        event.preventDefault();
+        newFileHandler();
+      }
+    };
+    window.addEventListener("keydown", nhandleKeyDown);
+
 
     return () => {
       window.removeEventListener("keydown", phandleKeyDown);
       window.removeEventListener("keydown", ehandleKeyDown);
       window.removeEventListener("keydown", qhandleKeyDown);
+      window.removeEventListener("keydown", nhandleKeyDown);
     };
   }, []);
 

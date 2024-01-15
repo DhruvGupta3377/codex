@@ -5,7 +5,6 @@ import { invoke } from "@tauri-apps/api/tauri";
 
 function App() {
   const [inEditing, setInEditing] = useState(true);
-  const [filePath, setFilePath] = useState("D:\LessHolyText\temp");
 
   async function fileExpClickHandler() {
     await invoke("open_filemanager");
@@ -61,7 +60,7 @@ function App() {
   }, []);
 
   return <>
-  {inEditing ? <TextCanvas /> : <View />}
+  {inEditing ? <TextCanvas/> : <View />}
   </>;
 }
 

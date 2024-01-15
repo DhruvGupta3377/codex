@@ -3,24 +3,29 @@ import { invoke } from "@tauri-apps/api/tauri";
 import "./textcanvas.css";
 
 const TextCanvas = () => {
-  const [data, setData] = useState();
-  const [formattedData, setFormattedData] = useState();
-
+  const [txtRecived, setTxtRecieved] = useState("");
   const inputRef = useRef(null);
 
   useEffect(()=>{
+    async function getFileTxt() {
+      const t = await invoke("read_curr_file")
+      inputRef.current.value = t;
+      setTxtRecieved(t);
+    }
+    console.log("fetching")
+    getFileTxt()
     inputRef.current.focus();
-  })
+  },[])
 
   async function parse(input) {
-    setFormattedData(await invoke("parse", { data: input }));
-    console.log(formattedData);
+    await invoke("parse", { data: input});
+    // console.log(formattedData);
   }
   
   const textInputHandler = () => {
     const input = event.target.value;
-    setData(input);
-    parse(input);
+    console.log(parse(input));
+
   };
   
   return (
@@ -28,7 +33,6 @@ const TextCanvas = () => {
     <textarea
     className="textarea" 
     ref={inputRef}
-    value={data}
     onChange={textInputHandler}
     id="fullscreen-textarea"
     placeholder="Type something...."

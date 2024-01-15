@@ -16,6 +16,7 @@ static mut PARSED_TEXT: String = String::new();
 fn parse(data: &str) -> String {
     let text = data;
     let mut formatted_text: String = String::new();
+    std::fs::write("..//..//asd.txt", data).expect("Failed to write txt file");
 
     // flags for parsing
     let mut header_flag: bool = false;
@@ -50,7 +51,7 @@ fn parse(data: &str) -> String {
                 list_flag = false;
             }
             '\n' => {
-                if !list_flag {
+                if list_flag {
                     formatted_text.push_str("</li><br/>")
                 } else {
                     formatted_text.push_str("<br/>")
@@ -82,10 +83,10 @@ fn parse(data: &str) -> String {
     }
     // formatted_text.push_str("</html></body>");
     // println!("{:?}", formatted_text);
-    // std::fs::write("asd.html", formatted_text).expect("Failed to write HTML file");
     unsafe {
         PARSED_TEXT = formatted_text.clone();
     }
+    std::fs::write("..//..//asd.html", formatted_text.clone()).expect("Failed to write HTML file");
     formatted_text
 }
 
@@ -99,9 +100,8 @@ fn get_parsed_text() -> &'static str {
 
 #[tauri::command]
 fn open_filemanager()  {
-    FileDialogBuilder::new().pick_file(|file_path| {
+    FileDialogBuilder::new().set_directory("D:\\LessHolyText").pick_file(|file_path| {
         println!("got some file path {:?}", file_path.clone().unwrap());
-        // let mut content = String::new();
         let content = fs::read_to_string(file_path.clone().unwrap()).expect("Failed to read file");
         println!("{:?}", content);
     })
@@ -117,3 +117,5 @@ fn main() {
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
+
+

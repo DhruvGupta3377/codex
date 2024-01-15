@@ -1,36 +1,39 @@
-import { useState, useRef } from "react";
+import { useState, useRef,useEffect } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
 import "./textcanvas.css";
-import Preview from "./Preview";
+import { useHotkeys } from "react-hotkeys-hook";
 
 const TextCanvas = () => {
   const [data, setData] = useState();
   const [formattedData, setFormattedData] = useState();
+
   const inputRef = useRef(null);
-  async function parse() {
-    setFormattedData(await invoke("parse", { data: data }));
+
+  useEffect(()=>{
+    inputRef.current.focus();
+  })
+
+  async function parse(input) {
+    setFormattedData(await invoke("parse", { data: input }));
     console.log(formattedData);
   }
+  
   const textInputHandler = () => {
     const input = event.target.value;
-    console.log(input);
     setData(input);
-    const lastChar = input.slice(-1);
-    if (lastChar === "(") {
-      setData(input + ")");
-    }
-    parse();
+    parse(input);
   };
-
+  
   return (
     <>
-      <textarea
-        ref={inputRef}
-        value={data}
-        onChange={textInputHandler}
-        id="fullscreen-textarea"
-        placeholder="Type something...."
-      ></textarea>
+    <textarea
+    className="textarea" 
+    ref={inputRef}
+    value={data}
+    onChange={textInputHandler}
+    id="fullscreen-textarea"
+    placeholder="Type something...."
+    ></textarea>
     </>
   );
 };

@@ -1,10 +1,8 @@
-// #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
+#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 use std::fs;
-use std::io::Read;
 use std::path::PathBuf;
 use tauri::api::dialog::FileDialogBuilder;
 use std::path::Path;
-
 
 /*
 #heading#
@@ -12,15 +10,9 @@ use std::path::Path;
 -list item
 $green$
 */
-
 static mut PARSED_TEXT   :String = String::new();
 static mut CURR_FILE_PATH:String = String::new();
 static mut CURR_FILE_NAME:String = String::new();
-
-#[tauri::command]
-fn emit_event(window: tauri::Window) {
- window.emit("my-event", "asd").unwrap();
-}
 
 
 fn set_curr_file(path : String){
@@ -55,6 +47,7 @@ fn parse(data: &str) -> String {
     let mut list_flag: bool = false;
     let mut bold_flag: bool = false;
     let mut green_font_flag: bool = false;
+    let mut italic_flag: bool = false;
     // formatted_text.push_str("<html><body>");
 
     for c in text.chars() {
@@ -106,6 +99,15 @@ fn parse(data: &str) -> String {
                     green_font_flag = false;
                 }
             }
+            '/' => {
+                if !italic_flag {
+                    formatted_text.push_str("<i>");
+                    italic_flag = true;
+                } else {
+                    formatted_text.push_str("</i>");
+                    italic_flag = false;
+                }
+            }
 
             _ => {
                 formatted_text.push(c);
@@ -113,7 +115,6 @@ fn parse(data: &str) -> String {
         }
     }
     // formatted_text.push_str("</html></body>");
-    // println!("{:?}", formatted_text);
     unsafe {
         PARSED_TEXT = formatted_text.clone();
         // let b = a.as_str();
@@ -122,6 +123,7 @@ fn parse(data: &str) -> String {
         // println!("{:?}", view_path);
     }
     std::fs::write("D:\\LessHolyText\\zmeta\\temp.html", formatted_text.clone()).expect("Failed to write HTML file");
+    // println!("{:?}", formatted_text.clone());
     formatted_text
 }
 
@@ -133,7 +135,7 @@ fn read_curr_file()->String{
         }
         let path = PathBuf::from(CURR_FILE_PATH.clone());
         let content = fs::read_to_string(path).expect("Failed to read file");
-        println!("{:?}",content.clone());
+        // println!("{:?}",content.clone());
         content
     }
 }
@@ -141,27 +143,28 @@ fn read_curr_file()->String{
 #[tauri::command]
 fn get_parsed_text() -> &'static str {
     unsafe {
-        println!("{:?}", PARSED_TEXT);
+        // println!("{:?}", PARSED_TEXT);
         &PARSED_TEXT
     }
 }
 
 #[tauri::command]
-fn open_filemanager()  {
-    FileDialogBuilder::new().set_directory("D:\\LessHolyText").pick_file(|file_path| {
+fn open_filemanager(){
+    let result = FileDialogBuilder::new().set_directory("D:\\LessHolyText").pick_file(|file_path| {
         println!("got some file path {:?}", file_path.clone().unwrap());
         let content = fs::read_to_string(file_path.clone().unwrap()).expect("Failed to read file");
         println!("{:?}", content);
         set_curr_file(file_path.clone().unwrap().to_string_lossy().to_string());
-    })
+    });
 }
 
+
 #[tauri::command]
-fn new_file() {
+fn new_file(){
     FileDialogBuilder::new().add_filter("Text documents(*.txt)", &["txt"]).set_directory("D:\\LessHolyText").save_file(|file_path| {
         println!("got some file path {:?}", file_path.clone().unwrap());
         std::fs::write(file_path.clone().unwrap(), "").expect("failed to create a newfile");
-        set_curr_file(file_path.clone().unwrap().to_string_lossy().to_string());                                                                                                                                    
+        set_curr_file(file_path.clone().unwrap().to_string_lossy().to_string());                                                                                                             
     })
 }
 
@@ -173,7 +176,6 @@ fn main() {
             open_filemanager,
             new_file,
             read_curr_file,
-            emit_event,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

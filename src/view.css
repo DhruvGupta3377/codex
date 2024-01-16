@@ -1,5 +1,18 @@
-div{
+.viewdiv{
   font-family: 'hack';
   font-size: 20px;
-  padding: 10px;
+  width: 100%;
+  height: 100%;
+  word-wrap: break-word; /* Enable word wrap */
+  padding: 5px;
+  background-color: #002b36; /* Base03 */
+  color: #839496; /* Base0 */
+
+}
+
+.viewp{
+  font-size: 15;
+  text-align: 'right';
+  padding: 5;
+  color: "yellow";
 }

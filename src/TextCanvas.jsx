@@ -11,8 +11,9 @@ const TextCanvas = () => {
       const t = await invoke("read_curr_file")
       inputRef.current.value = t;
       setTxtRecieved(t);
+      parse(t);
     }
-    console.log("fetching")
+    // console.log("fetching")
     getFileTxt()
     inputRef.current.focus();
   },[])
@@ -24,12 +25,14 @@ const TextCanvas = () => {
   
   const textInputHandler = () => {
     const input = event.target.value;
-    console.log(parse(input));
+    parse(input)
+    // console.log(parse(input));
 
   };
   
   return (
     <>
+    <p style={{ fontSize: 15,fontFamily:"hack",  textAlign: 'right', padding: 5,color: "grey"}}>Edit </p>
     <textarea
     className="textarea" 
     ref={inputRef}

@@ -13,7 +13,9 @@ const View = () => {
 
   return (
     <>
-      <div dangerouslySetInnerHTML={{ __html: text }} />
+    <p style={{ fontSize: 15,  fontFamily:"hack" , textAlign: 'right', padding: 5, color: "grey"}}>View </p>
+    <div className="viewdiv" dangerouslySetInnerHTML={{ __html: text }} >
+    </div>
     </>
   );
 };

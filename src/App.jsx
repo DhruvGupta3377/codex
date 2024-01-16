@@ -5,22 +5,19 @@ import { invoke } from "@tauri-apps/api/tauri";
 
 function App() {
   const [inEditing, setInEditing] = useState(true);
-
   async function fileExpClickHandler() {
     await invoke("open_filemanager");
-  }
+ }
 
   async function newFileHandler(){
     await invoke("new_file");
   }
-
 
   useEffect(() => {
     const phandleKeyDown = (event) => {
       if (event.ctrlKey && event.key === "p") {
         event.preventDefault();
         setInEditing(false);
-        console.log("p triggered")
       }
     };
     window.addEventListener("keydown", phandleKeyDown);
@@ -38,6 +35,7 @@ function App() {
       if (event.ctrlKey && event.key === "q") {
         event.preventDefault();
         fileExpClickHandler();
+        setInEditing(true);
       }
     };
     window.addEventListener("keydown", qhandleKeyDown);
@@ -46,6 +44,7 @@ function App() {
       if (event.ctrlKey && event.key === "n") {
         event.preventDefault();
         newFileHandler();
+        setInEditing(true);
       }
     };
     window.addEventListener("keydown", nhandleKeyDown);

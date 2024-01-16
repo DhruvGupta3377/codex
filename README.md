@@ -14,6 +14,6 @@ ReactJS for frontend.
 # Shortcuts
 
 - Ctrl + q => open space to select file.
-- Ctrl + n => open space and create a new file
-- Ctrl + e => enter *edit* mode
-- Ctrl + p => enter *view* mode
+- Ctrl + n => open space and create a new file. 
+- Ctrl + e => enter *edit* mode. 
+- Ctrl + p => enter *view* mode. 

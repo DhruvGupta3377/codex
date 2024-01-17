@@ -3,22 +3,23 @@ html,body {
   padding: 5;
   width: 100%;
   height: 100%;
-  overflow-x: hidden;
   background-color: #002b36; /* Base03 */
   color: #839496; /* Base0 */
+  overflow: hidden;
 }
 .textarea {
+  overflow-x: hidden;
   width: 100%;
   height: 100vh;
   font-family: 'hack';
   font-size: 20px;
   border: none; 
   outline: none; /* Remove default outline */
-  overflow: hidden;
   background-color: #002b36; /* Base03 */
   color: #839496; /* Base0 */
+  resize: none;
+  
 }
-
 ::-webkit-scrollbar {
   width: 12px; /* Width of the scrollbar */
 }

@@ -32,13 +32,13 @@ const TextCanvas = () => {
   
   return (
     <>
-    <p style={{ fontSize: 15,fontFamily:"hack",  textAlign: 'right', padding: 5,color: "grey"}}>Edit </p>
     <textarea
     className="textarea" 
     ref={inputRef}
     onChange={textInputHandler}
     id="fullscreen-textarea"
     placeholder="Type something...."
+    // onLoad={alert("edit")}
     ></textarea>
     </>
   );

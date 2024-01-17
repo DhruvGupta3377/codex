@@ -150,11 +150,11 @@ fn get_parsed_text() -> &'static str {
 
 #[tauri::command]
 fn open_filemanager(){
-    let result = FileDialogBuilder::new().set_directory("D:\\LessHolyText").pick_file(|file_path| {
+    FileDialogBuilder::new().set_directory("D:\\LessHolyText").pick_file(|file_path| {
         println!("got some file path {:?}", file_path.clone().unwrap());
         let content = fs::read_to_string(file_path.clone().unwrap()).expect("Failed to read file");
         println!("{:?}", content);
-        set_curr_file(file_path.clone().unwrap().to_string_lossy().to_string());
+        set_curr_file(file_path.clone().unwrap().to_string_lossy().to_string()); 
     });
 }
 

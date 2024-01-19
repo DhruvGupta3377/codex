@@ -10,6 +10,7 @@ use std::path::Path;
 -list item
 $green$
 */
+
 static mut PARSED_TEXT   :String = String::new();
 static mut CURR_FILE_PATH:String = String::new();
 static mut CURR_FILE_NAME:String = String::new();
@@ -167,7 +168,6 @@ fn new_file(){
         set_curr_file(file_path.clone().unwrap().to_string_lossy().to_string());                                                                                                             
     })
 }
-
 fn main() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![

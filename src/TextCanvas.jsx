@@ -1,45 +1,45 @@
-import { useState, useRef,useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
 import "./textcanvas.css";
 
-const TextCanvas = () => {
-  const [txtRecived, setTxtRecieved] = useState("");
+const TextCanvas = (props) => {
   const inputRef = useRef(null);
 
-  useEffect(()=>{
+  useEffect(() => {
     async function getFileTxt() {
-      const t = await invoke("read_curr_file")
+      const t = await invoke("read_curr_file");
       inputRef.current.value = t;
-      setTxtRecieved(t);
       parse(t);
     }
-    // console.log("fetching")
-    getFileTxt()
+    getFileTxt();
     inputRef.current.focus();
-  },[])
+    
+    async function parse(input) {
+      await invoke("parse", { data: input });
+    }
+    const phandleKeyDown = (event) => {
+      if (event.ctrlKey && event.key === "p") {
+        event.preventDefault();
+        parse(inputRef.current.value);
+        console.log("parsed");
+        props.pfunc(false);
+      }
+    };
+    window.addEventListener("keydown", phandleKeyDown);
 
-  async function parse(input) {
-    await invoke("parse", { data: input});
-    // console.log(formattedData);
-  }
-  
-  const textInputHandler = () => {
-    const input = event.target.value;
-    parse(input)
-    // console.log(parse(input));
+    return () => {
+      window.removeEventListener("keydown", phandleKeyDown);
+    };
+  }, []);
 
-  };
-  
   return (
     <>
-    <textarea
-    className="textarea" 
-    ref={inputRef}
-    onChange={textInputHandler}
-    id="fullscreen-textarea"
-    placeholder="Type something...."
-    // onLoad={alert("edit")}
-    ></textarea>
+      <textarea
+        className="textarea"
+        ref={inputRef}
+        id="fullscreen-textarea"
+        placeholder="Type something...."
+      ></textarea>
     </>
   );
 };

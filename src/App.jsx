@@ -14,13 +14,13 @@ function App() {
   }
 
   useEffect(() => {
-    const phandleKeyDown = (event) => {
-      if (event.ctrlKey && event.key === "p") {
-        event.preventDefault();
-        setInEditing(false);
-      }
-    };
-    window.addEventListener("keydown", phandleKeyDown);
+    // const phandleKeyDown = (event) => {
+    //   if (event.ctrlKey && event.key === "p") {
+    //     event.preventDefault();
+    //     setInEditing(false);
+    //   }
+    // };
+    // window.addEventListener("keydown", phandleKeyDown);
 
     const ehandleKeyDown = (event) => {
       if (event.ctrlKey && event.key === "e") {
@@ -51,7 +51,7 @@ function App() {
 
 
     return () => {
-      window.removeEventListener("keydown", phandleKeyDown);
+      // window.removeEventListener("keydown", phandleKeyDown);
       window.removeEventListener("keydown", ehandleKeyDown);
       window.removeEventListener("keydown", qhandleKeyDown);
       window.removeEventListener("keydown", nhandleKeyDown);
@@ -59,7 +59,7 @@ function App() {
   }, []);
 
   return <>
-  {inEditing ? <TextCanvas/> : <View />}
+  {inEditing ? <TextCanvas pfunc = {setInEditing}/> : <View />}
   </>;
 }
 

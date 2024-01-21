@@ -34,6 +34,7 @@ const TextCanvas = (props) => {
 
   return (
     <>
+    <p style={{ fontSize: 15,  fontFamily:"hack" ,padding: 0, textAlign: 'right', right:1, top: 0, color: "red",position :"absolute"}}>~</p>
       <textarea
         className="textarea"
         ref={inputRef}

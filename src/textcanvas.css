@@ -1,6 +1,6 @@
 html,body {
   margin: 0;
-  padding: 5;
+  padding: 0;
   width: 100%;
   height: 100%;
   background-color: #002b36; /* Base03 */
@@ -18,7 +18,6 @@ html,body {
   background-color: #002b36; /* Base03 */
   color: #839496; /* Base0 */
   resize: none;
-  
 }
 ::-webkit-scrollbar {
   width: 12px; /* Width of the scrollbar */

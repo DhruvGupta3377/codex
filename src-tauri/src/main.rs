@@ -1,8 +1,10 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 use std::fs;
-use std::path::PathBuf;
-use tauri::api::dialog::FileDialogBuilder;
 use std::path::Path;
+use std::path::PathBuf;
+// use tauri::api::dialog::FileDialogBuilder;
+
+use tauri::api::dialog::blocking::FileDialogBuilder;
 
 /*
 #heading#
@@ -11,13 +13,12 @@ use std::path::Path;
 $green$
 */
 
-static mut PARSED_TEXT   :String = String::new();
-static mut CURR_FILE_PATH:String = String::new();
-static mut CURR_FILE_NAME:String = String::new();
+static mut PARSED_TEXT: String = String::new();
+static mut CURR_FILE_PATH: String = String::new();
+static mut CURR_FILE_NAME: String = String::new();
 
-
-fn set_curr_file(path : String){
-    unsafe{
+fn set_curr_file(path: String) {
+    unsafe {
         CURR_FILE_PATH = path.clone();
         let path = Path::new(&CURR_FILE_PATH);
         if let Some(file_stem) = path.file_stem() {
@@ -34,14 +35,13 @@ fn set_curr_file(path : String){
 fn parse(data: &str) -> String {
     let text = data;
     let mut formatted_text: String = String::new();
-    unsafe{
-        if CURR_FILE_PATH.is_empty(){
+    unsafe {
+        if CURR_FILE_PATH.is_empty() {
             CURR_FILE_PATH = String::from("D:\\LessHolyText\\zmeta\\temp.txt");
         }
         let path = PathBuf::from(CURR_FILE_PATH.clone());
         std::fs::write(&path, data).expect("Failed to write txt file");
     }
-
     // flags for parsing
     let mut header_flag: bool = false;
     let mut red_font_flag: bool = false;
@@ -123,15 +123,16 @@ fn parse(data: &str) -> String {
         // let mut view_path = PathBuf::from(format!("D:\\LessHolyText\\zmeta\\{:?}.html", CURR_FILE_NAME.trim()));
         // println!("{:?}", view_path);
     }
-    std::fs::write("D:\\LessHolyText\\zmeta\\temp.html", formatted_text.clone()).expect("Failed to write HTML file");
+    std::fs::write("D:\\LessHolyText\\zmeta\\temp.html", formatted_text.clone())
+        .expect("Failed to write HTML file");
     // println!("{:?}", formatted_text.clone());
     formatted_text
 }
 
 #[tauri::command]
-fn read_curr_file()->String{
-    unsafe{
-        if CURR_FILE_PATH.is_empty(){
+fn read_curr_file() -> String {
+    unsafe {
+        if CURR_FILE_PATH.is_empty() {
             CURR_FILE_PATH = String::from("D:\\LessHolyText\\zmeta\\temp.txt");
         }
         let path = PathBuf::from(CURR_FILE_PATH.clone());
@@ -150,24 +151,50 @@ fn get_parsed_text() -> &'static str {
 }
 
 #[tauri::command]
-fn open_filemanager(){
-    FileDialogBuilder::new().set_directory("D:\\LessHolyText").pick_file(|file_path| {
-        println!("got some file path {:?}", file_path.clone().unwrap());
-        let content = fs::read_to_string(file_path.clone().unwrap()).expect("Failed to read file");
-        println!("{:?}", content);
-        set_curr_file(file_path.clone().unwrap().to_string_lossy().to_string()); 
-    });
+async fn open_filemanager() {
+    let file_path = FileDialogBuilder::new()
+        .set_directory("D:\\LessHolyText")
+        .pick_file();
+    // println!("got some file path {:?}", file_path.clone().unwrap());
+    set_curr_file(file_path.clone().unwrap().to_string_lossy().to_string());
+    // let content = fs::read_to_string(file_path.clone().unwrap()).expect("Failed to read file");
 }
-
 
 #[tauri::command]
-fn new_file(){
-    FileDialogBuilder::new().add_filter("Text documents(*.txt)", &["txt"]).set_directory("D:\\LessHolyText").save_file(|file_path| {
-        println!("got some file path {:?}", file_path.clone().unwrap());
-        std::fs::write(file_path.clone().unwrap(), "").expect("failed to create a newfile");
-        set_curr_file(file_path.clone().unwrap().to_string_lossy().to_string());                                                                                                             
-    })
+async fn new_file() {
+    let file_path = FileDialogBuilder::new()
+        .add_filter("Text documents(*.txt)", &["txt"])
+        .save_file();
+    std::fs::write(file_path.clone().unwrap(), "").expect("failed to create a newfile");
+    set_curr_file(file_path.clone().unwrap().to_string_lossy().to_string());
 }
+
+// #[tauri::command]
+// fn open_filemanager() {
+//     FileDialogBuilder::new()
+//         .set_directory("D:\\LessHolyText")
+//         .pick_file(|file_path| {
+//             // println!("got some file path {:?}", file_path.clone().unwrap());
+//             let content =
+//                 fs::read_to_string(file_path.clone().unwrap()).expect("Failed to read file");
+//             set_curr_file(file_path.clone().unwrap().to_string_lossy().to_string());
+//             println!("{:?}", content);
+//         });
+
+//     // println!("{:?}", res).await;
+// }
+
+// #[tauri::command]
+// fn new_file() {
+//     FileDialogBuilder::new()
+//         .add_filter("Text documents(*.txt)", &["txt"])
+//         .set_directory("D:\\LessHolyText")
+//         .save_file(|file_path| {
+//             println!("got some file path {:?}", file_path.clone().unwrap());
+//             std::fs::write(file_path.clone().unwrap(), "").expect("failed to create a newfile");
+//             set_curr_file(file_path.clone().unwrap().to_string_lossy().to_string());
+//         })
+// }
 fn main() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
@@ -180,5 +207,3 @@ fn main() {
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
-
-

@@ -10,9 +10,9 @@ const View = () => {
   useEffect(() => {
     fetchFile();
   });
-
+  
+  // <p style={{ fontSize: 15,  fontFamily:"hack" , textAlign: 'right', padding: 5, color: "grey"}}>View </p>
   return (
-    // <p style={{ fontSize: 15,  fontFamily:"hack" , textAlign: 'right', padding: 5, color: "grey"}}>View </p>
     <>
     <div className="viewdiv" dangerouslySetInnerHTML={{ __html: text }} >
     </div>

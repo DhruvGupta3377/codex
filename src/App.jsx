@@ -7,10 +7,12 @@ function App() {
   const [inEditing, setInEditing] = useState(true);
   async function fileExpClickHandler() {
     await invoke("open_filemanager");
- }
-
+    window.location.reload()
+  }
+  
   async function newFileHandler(){
     await invoke("new_file");
+    window.location.reload()
   }
 
   useEffect(() => {

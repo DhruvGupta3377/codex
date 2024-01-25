@@ -5,6 +5,10 @@ html,body {
   height: 100%;
   background-color: #002b36; /* Base03 */
   color: #839496; /* Base0 */
+  /* overflow: hidden; */
+}
+
+div{
   overflow: hidden;
 }
 .textarea {
@@ -20,7 +24,7 @@ html,body {
   resize: none;
 }
 ::-webkit-scrollbar {
-  width: 12px; /* Width of the scrollbar */
+  width: 0px; /* Width of the scrollbar */
 }
 
 ::-webkit-scrollbar-thumb {

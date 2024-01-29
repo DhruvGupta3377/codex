@@ -1,9 +1,9 @@
 # Codex
 
 Markdown inspired text editor written in rust and javascript.
+This is a markdown inspired note taking application with shortcuts to openfile, change modes, create newfiles, it has a set of rules like markdown and a parser written in rust is used to convert txt to html using those set of rules the frontend is written in react with solarized used as a theme.
 
 Tauri for backend.
-
 ReactJS for frontend.
 
 # Screenshots

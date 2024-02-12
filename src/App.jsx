@@ -5,13 +5,24 @@ import { invoke } from "@tauri-apps/api/tauri";
 
 function App() {
   const [inEditing, setInEditing] = useState(true);
+  const [fileName, setFilename] = useState("temp");
+
+  async function getfilename(){
+    const re = await invoke("get_file_name");
+    if (re != ""){
+      setFilename(re);
+    }
+  }
+
   async function fileExpClickHandler() {
     await invoke("open_filemanager");
+    getfilename();
     window.location.reload()
   }
   
   async function newFileHandler(){
     await invoke("new_file");
+    getfilename();
     window.location.reload()
   }
 
@@ -23,6 +34,7 @@ function App() {
     //   }
     // };
     // window.addEventListener("keydown", phandleKeyDown);
+    getfilename()
 
     const ehandleKeyDown = (event) => {
       if (event.ctrlKey && event.key === "e") {
@@ -61,6 +73,7 @@ function App() {
   }, []);
 
   return <>
+  <p style={{ fontSize: 15 , color: "pink",  fontFamily:"hack" , left: 5 , padding: 0, textAlign: 'Left', top: 0, position :"absolute"}}>Title : {fileName}</p>
   {inEditing ? <TextCanvas pfunc = {setInEditing}/> : <View />}
   </>;
 }

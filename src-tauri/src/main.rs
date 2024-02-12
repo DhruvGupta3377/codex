@@ -25,7 +25,7 @@ fn set_curr_file(path: String) {
             if let Some(file_stem_str) = file_stem.to_str() {
                 CURR_FILE_NAME = file_stem_str.to_string();
                 // println!("{:?}", CURR_FILE_NAME);
-                CURR_FILE_NAME = String::from("nope");
+                // CURR_FILE_NAME = String::from("nope");
             }
         }
     }
@@ -151,6 +151,14 @@ fn get_parsed_text() -> &'static str {
 }
 
 #[tauri::command]
+fn get_file_name() -> &'static str{
+    unsafe {
+        // println!("{:?}",CURR_FILE_NAME );
+        &CURR_FILE_NAME
+    }
+}
+
+#[tauri::command]
 async fn open_filemanager() {
     let file_path = FileDialogBuilder::new()
         .set_directory("D:\\LessHolyText")
@@ -203,6 +211,7 @@ fn main() {
             open_filemanager,
             new_file,
             read_curr_file,
+            get_file_name,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

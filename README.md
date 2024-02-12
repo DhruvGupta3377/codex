@@ -48,7 +48,7 @@ ReactJS for frontend.
 - [x] Add solarized dark as a theme
 - [x] Add a way to distinguish between Edit and View mode
 - [ ] Add white mode
-- [ ] Add open file name in title bar
+- [x] Add open file name in title bar
 
 # Maybe
 

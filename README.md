@@ -1,5 +1,9 @@
 # Codex
 
+![Square71x71Logo](https://github.com/DhruvGupta3377/codex/assets/90503781/64b58349-d5b4-4b39-a97b-aee0ba03cf90)
+
+
+
 This is a markdown inspired note taking application with shortcuts to openfile, change modes, create newfiles, it has a set of rules like markdown and a parser written in rust is used to convert txt to html using those set of rules the frontend is written in react with solarized used as a theme.
 
 Tauri for backend.

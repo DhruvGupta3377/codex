@@ -46,6 +46,7 @@ ReactJS for frontend.
 - [ ] Functionality to add links
 - [ ] Code Blocks
 - [ ] Add your own font colours
+- [ ] Command Palette
 
 # Improvements
 

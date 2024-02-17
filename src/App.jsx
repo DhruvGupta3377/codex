@@ -2,18 +2,20 @@ import { useState, useEffect } from "react";
 import View from "./View";
 import TextCanvas from "./TextCanvas";
 import { invoke } from "@tauri-apps/api/tauri";
+import CommandPalette from "./CommandPalette";
 
 function App() {
   const [inEditing, setInEditing] = useState(true);
   const [fileName, setFilename] = useState("temp");
-
+  const [cpmodal, setCpmodal] = useState();
+  
   async function getfilename(){
     const re = await invoke("get_file_name");
     if (re != ""){
       setFilename(re);
     }
   }
-
+  
   async function fileExpClickHandler() {
     await invoke("open_filemanager");
     getfilename();
@@ -24,17 +26,19 @@ function App() {
     await invoke("new_file");
     getfilename();
     window.location.reload()
-  }
+  } 
 
   useEffect(() => {
-    // const phandleKeyDown = (event) => {
-    //   if (event.ctrlKey && event.key === "p") {
-    //     event.preventDefault();
-    //     setInEditing(false);
-    //   }
-    // };
-    // window.addEventListener("keydown", phandleKeyDown);
     getfilename()
+
+    const khandleKeyDown = (event) => {
+      if (event.ctrlKey && event.key === "k") {
+        event.preventDefault();
+        console.log("setting")
+        setCpmodal(<CommandPalette noComPal = {() => {setCpmodal("")}} />);
+      }
+    }
+    window.addEventListener("keydown", khandleKeyDown);
 
     const ehandleKeyDown = (event) => {
       if (event.ctrlKey && event.key === "e") {
@@ -64,18 +68,22 @@ function App() {
     window.addEventListener("keydown", nhandleKeyDown);
 
 
+
     return () => {
-      // window.removeEventListener("keydown", phandleKeyDown);
+      window.removeEventListener("keydown", khandleKeyDown);
       window.removeEventListener("keydown", ehandleKeyDown);
       window.removeEventListener("keydown", qhandleKeyDown);
       window.removeEventListener("keydown", nhandleKeyDown);
     };
   }, []);
 
+  // <div onFocus={() => {setCpmodal("")}}>
   return <>
   <p style={{ fontSize: 15 , color: "pink",  fontFamily:"hack" , left: 5 , padding: 0, textAlign: 'Left', top: 0, position :"absolute"}}>Title : {fileName}</p>
   {inEditing ? <TextCanvas pfunc = {setInEditing}/> : <View />}
+  {cpmodal}
   </>;
 }
+// </div>
 
 export default App;

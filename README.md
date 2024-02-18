@@ -12,15 +12,20 @@ ReactJS for frontend.
 
 # Screenshots
 
-![image](https://github.com/DhruvGupta3377/codex/assets/90503781/35b51792-a6f8-40ea-8f82-aec3672f28d0)
+![image](https://github.com/DhruvGupta3377/codex/assets/90503781/0d41a05d-51b6-44eb-bb11-b16ef4e275a0)
 
-![image](https://github.com/DhruvGupta3377/codex/assets/90503781/defc5a63-d7c3-44b2-a1da-c88daf417f4a)
+-----
 
-![image](https://github.com/DhruvGupta3377/codex/assets/90503781/f35748d9-7318-43fb-8b37-3e869f142da5)
+![image](https://github.com/DhruvGupta3377/codex/assets/90503781/4a63c615-7f4d-483d-ba69-30f86f5d255d)
 
-![image](https://github.com/DhruvGupta3377/codex/assets/90503781/9ec8a3c7-9ac1-491d-8784-40b0c3e68a12)
+-----
 
-![image](https://github.com/DhruvGupta3377/codex/assets/90503781/012277f8-ac10-4b31-99ef-497827b1bc44)
+![image](https://github.com/DhruvGupta3377/codex/assets/90503781/bd8b26f3-30ea-4256-8268-fce4b34b21d9)
+
+-----
+
+![image](https://github.com/DhruvGupta3377/codex/assets/90503781/c806a7d0-4dc7-4fa5-b66d-fdaa81c23763)
+
 
 
 # Shortcuts
@@ -30,6 +35,7 @@ ReactJS for frontend.
 - Ctrl + e => enter *edit* mode. 
 - Ctrl + p => enter *view* mode. (in edit mode)
 - Ctrl + p => print PDF (in view mode)
+- Ctrl + k => open Command Palette
 
 
 # How to Run
@@ -46,7 +52,7 @@ ReactJS for frontend.
 - [ ] Functionality to add links
 - [ ] Code Blocks
 - [ ] Add your own font colours
-- [ ] Command Palette
+- [x] Command Palette
 
 # Improvements
 
@@ -54,6 +60,7 @@ ReactJS for frontend.
 - [x] Add a way to distinguish between Edit and View mode
 - [ ] Add white mode
 - [x] Add open file name in title bar
+- [ ] Navigate Command Palette with arrow keys
 
 # Maybe
 

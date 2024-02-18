@@ -1,0 +1,20 @@
+.button {
+  /* background: "none";
+  border: "none"; */
+  /* color: "inherit"; */
+  font-family: "hack";
+  cursor: "pointer";
+  padding-top: 10px;
+  padding-bottom: 10px;
+  /* background-color: transparent;
+  border: none; */
+  width: 490px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+
+.button:hover {
+  background-color: #191e22;
+}

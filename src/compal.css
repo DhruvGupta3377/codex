@@ -4,7 +4,8 @@
   /* color: "inherit"; */
   font-family: "hack";
   cursor: "pointer";
-  padding: 10px 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   /* background-color: transparent;
   border: none; */
   width: 490px;
@@ -16,3 +17,4 @@
 
 .button:hover {
   background-color: #191e22;
+}

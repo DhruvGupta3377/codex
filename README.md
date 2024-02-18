@@ -53,6 +53,7 @@ ReactJS for frontend.
 - [ ] Code Blocks
 - [ ] Add your own font colours
 - [x] Command Palette
+- [ ] Space Select
 
 # Improvements
 
@@ -61,6 +62,7 @@ ReactJS for frontend.
 - [ ] Add white mode
 - [x] Add open file name in title bar
 - [ ] Navigate Command Palette with arrow keys
+- [ ] Help Button
 
 # Maybe
 

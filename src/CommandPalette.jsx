@@ -7,9 +7,9 @@ const CommandPalette = (props) => {
 
   const commands = [
     ctx.changeToViewMode,
-    ctx.changeToEditMode(),
+    ctx.changeToEditMode,
     console.log("work in progress"),
-    () => ctx.fileExpClickHandler(),
+    ctx.fileExpClickHandler,
     ctx.newFileHandler,
     console.log("work in progress")
   ]
@@ -32,7 +32,7 @@ const CommandPalette = (props) => {
               return (
                 <div
                   className="button"
-                  onClick={commands[index]}
+                  onClick={() => {commands[index]()}}
                   key={index}
                 >
                   {option}

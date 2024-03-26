@@ -10,6 +10,9 @@ Tauri for backend.
 
 ReactJS for frontend.
 
+![codex](https://github.com/DhruvGupta3377/codex/assets/90503781/38aed8e0-d7da-480a-9980-d709c6b4e16c)
+
+
 # Screenshots
 
 ![image](https://github.com/DhruvGupta3377/codex/assets/90503781/0d41a05d-51b6-44eb-bb11-b16ef4e275a0)
